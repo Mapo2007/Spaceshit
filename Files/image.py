@@ -8,7 +8,7 @@ class Image:
         self.image = image
         self.rect = self.image.get_rect()
         self.rect.center = self.pos
-        self.collide_recta = pygame.Rect((0,0),(90,100))
+        self.collide_recta = pygame.Rect((0,0),(80,90))
         self.collide_recta.center = self.pos
         self.velocity = 15
 
@@ -31,15 +31,15 @@ class Image:
         self.rect.y += 100
 
     def shrink(self, pos):
-        self.image = pygame.transform.scale(self.image, (50,63))
+        self.image = pygame.transform.scale(self.image, (74,94))
         self.velocity = 30
         self.rect = self.image.get_rect()
         self.rect.center = pos
-        self.collide_recta = pygame.Rect((0,0),(20,50))
+        self.collide_recta = pygame.Rect((0,0),(40,80))
         self.collide_recta.center = pos
     
     def unShrink(self, pos):
-        self.image = pygame.transform.scale(self.image, (160,200))
+        self.image = pygame.transform.scale(self.image, (115,144))
         self.velocity = 15
         self.rect = self.image.get_rect()
         self.rect.center = pos

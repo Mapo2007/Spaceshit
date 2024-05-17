@@ -8,7 +8,7 @@ class Roccia:
         self.frames = frames
         self.pos = (randint(0,1920), -100)
         self.rect = []
-        self.collide_recta = pygame.rect.Rect((0,0), (200,280))
+        self.collide_recta = pygame.rect.Rect((0,0), (80,280))
         for i in range(4):
             self.frames[i] = pygame.transform.scale(self.frames[i], (300,300))
             self.rect.append(self.frames[i].get_rect())

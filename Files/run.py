@@ -36,7 +36,7 @@ class run:
         exit_img = pygame.image.load("Images/layer3.png")
         exit_img = pygame.transform.scale(exit_img, (200,71))
         ship_img = pygame.image.load("Images/navicella.png")
-        ship_img = pygame.transform.scale(ship_img, (160,200))
+        ship_img = pygame.transform.scale(ship_img, (115,144))
         rock_img = pygame.image.load("Images/asteroide.png")
         space_img = pygame.image.load("Images/space.png")
         exp_frames = []
