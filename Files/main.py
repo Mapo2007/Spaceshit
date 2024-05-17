@@ -98,7 +98,7 @@ while True:
     spaceRect.draw()
 
     text = font.render(f"Best Score: {best}", 1, WHITE)
-    screen.blit(text, (window_widht/2-190, window_height-150))
+    screen.blit(text, (window_widht/2-195, window_height-150))
     
     start_btn.draw()
     exit_btn.draw()

@@ -31,10 +31,10 @@ class run:
         update_velocity = False
         
         # Caricamentp immagini:
-        resume_img = pygame.image.load("Images/ClickIcon.png")
-        resume_img = pygame.transform.scale(resume_img, (99,71))
-        exit_img = pygame.image.load("Images/ExitIcon.png")
-        exit_img = pygame.transform.scale(exit_img, (99,71))
+        resume_img = pygame.image.load("Images/layer3.png")
+        resume_img = pygame.transform.scale(resume_img, (200,71))
+        exit_img = pygame.image.load("Images/layer3.png")
+        exit_img = pygame.transform.scale(exit_img, (200,71))
         ship_img = pygame.image.load("Images/navicella.png")
         ship_img = pygame.transform.scale(ship_img, (160,200))
         rock_img = pygame.image.load("Images/asteroide.png")
@@ -146,27 +146,33 @@ class run:
                 # animazione tasto play 
                 pos1 = pygame.mouse.get_pos()
                 if resume_btn.rect.collidepoint(pos1):
-                    resume_img = pygame.image.load("Images/PlayIconClick.png")
-                    resume_img = pygame.transform.scale(resume_img, (99,71))
+                    resume_img = pygame.image.load("Images/layer4.png")
+                    resume_img = pygame.transform.scale(resume_img, (200,71))
                     resume_btn = Button(self.screen, (self.window[0]/2, self.window[1]/2-80), resume_img)
                 else:
-                    resume_img = pygame.image.load("Images/ClickIcon.png")
-                    resume_img = pygame.transform.scale(resume_img, (99,71))
+                    resume_img = pygame.image.load("Images/layer3.png")
+                    resume_img = pygame.transform.scale(resume_img, (200,71))
                     resume_btn = Button(self.screen, (self.window[0]/2, self.window[1]/2-80), resume_img)
 
                 # animazione tasto exit 
                 pos2 = pygame.mouse.get_pos()
                 if exit_btn.rect.collidepoint(pos2):
-                    exit_img = pygame.image.load("Images/ExitIconClick.png")
-                    exit_img = pygame.transform.scale(exit_img, (99,71))
+                    exit_img = pygame.image.load("Images/layer4.png")
+                    exit_img = pygame.transform.scale(exit_img, (200,71))
                     exit_btn = Button(self.screen, (self.window[0]/2, self.window[1]/2+80), exit_img)
                 else:
-                    exit_img = pygame.image.load("Images/ExitIcon.png")
-                    exit_img = pygame.transform.scale(exit_img, (99,71))
+                    exit_img = pygame.image.load("Images/layer3.png")
+                    exit_img = pygame.transform.scale(exit_img, (200,71))
                     exit_btn = Button(self.screen, (self.window[0]/2, self.window[1]/2+80), exit_img)
 
                 resume_btn.draw()
                 exit_btn.draw()
+
+                text = font.render(f"Continua", 1, self.colori[1])
+                self.screen.blit(text, (self.window[0]/2-68, self.window[1]/2-100))
+
+                text = font.render(f"Menù", 1, self.colori[1])
+                self.screen.blit(text, (self.window[0]/2-35, self.window[1]/2+60))
 
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     pos = pygame.mouse.get_pos()
