@@ -99,8 +99,8 @@ class run:
                 # velocità delle rocce a score = 25
                 if punti == 25 and pPunt >= 1500:
                     rock.velocity += 10
-                    rock.tot += 10
-                    rock_frequency = 7000
+                    rock.tot += 20
+                    rock_frequency = 2000
                     update_velocity = True
 
                 # aggiunta punti

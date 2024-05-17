@@ -3,10 +3,11 @@ from pygame.locals import *
 from random import randint
 
 class Roccia:
-    def __init__(self,screen, frames, tot = 10):
+    def __init__(self,screen, frames, tot = 20):
         self.screen = screen
         self.frames = frames
-        self.pos = (randint(0,1920), -100)
+        self.tot = tot
+        self.pos = (randint(100,1820), -100)
         self.rect = []
         self.collide_recta = pygame.rect.Rect((0,0), (80,280))
         for i in range(4):
@@ -20,7 +21,7 @@ class Roccia:
         self.lista = []
         self.j = 0
         self.velocity = 15
-        self.tot = tot
+        
 
     def draw(self, j):
         for i in range(len(self.lista)):
