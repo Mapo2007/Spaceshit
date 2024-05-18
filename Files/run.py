@@ -6,6 +6,7 @@ from random import randint
 from roccia import *
 from space import *
 from Animations import *
+from projectile import *
 
 class run:
     def __init__(self, screen, colori, clock, window):
@@ -25,30 +26,42 @@ class run:
         pRsFrame = 0
         pShrink = 0
         which_frame_rock = 0
+        which_frame_proj = 0
         rock_frequency = 10000
         font = pygame.font.Font("Fonts/Upheavtt.ttf", 30)
         start_animation = False
         drawShrink = False
         update_velocity = False
+        draw_proj = False
         
         # Caricamentp immagini:
         resume_img = pygame.image.load("Images/layer3.png")
         resume_img = pygame.transform.scale(resume_img, (200,71))
+       
         exit_img = pygame.image.load("Images/layer3.png")
         exit_img = pygame.transform.scale(exit_img, (200,71))
+        
         ship_img = pygame.image.load("Images/navicella.png")
         ship_img = pygame.transform.scale(ship_img, (115,144))
-        rock_img = pygame.image.load("Images/asteroide.png")
+        
         space_img = pygame.image.load("Images/space.png")
+        
         exp_frames = []
         for i in range(10):
             exp_frames.append(pygame.image.load(f"Images/Explosion/frame{str(i)}.png"))
+        
         shrink_img = pygame.image.load("Images/shrink.png")
         shrink_img = pygame.transform.scale(shrink_img, (50,50))
+        
         asteroide_frames = []
         for i in range(80):
             asteroide_frames.append(pygame.image.load(f"Images/Fireball_Frames/frame_{str(i)}_delay-0.02s.png"))
             asteroide_frames[i] = pygame.transform.rotate(asteroide_frames[i], 90)
+        
+        projectil_frames = []
+        for i in range(4):
+            projectil_frames.append(pygame.image.load(f"Images/Projectile_Frames/frame{str(i)}.png"))
+            projectil_frames[i] = pygame.transform.rotate(projectil_frames[i], (-135))
         
             
 
@@ -64,11 +77,17 @@ class run:
         spaceRect.new()
         pos = (randint(100,self.window[0]-100), -100)
         shrinkRect = Ship(self.screen, pos, (100,100), shrink_img)
+        projectilRect = Projectil(self.screen, projectil_frames, navRect.rect.center)
 
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                     game_pause = True
+
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                    draw_proj = True
+                    
+
                 if event.type == QUIT:
                     fScore = open("Files/BestScore.txt", "w", encoding= "Utf-8")
                     fScore.writelines(str(punti))
@@ -127,6 +146,15 @@ class run:
                     pos = (randint(100,self.window[0]-100), -100)
                     shrinkRect = Ship(self.screen, pos, (100,100), shrink_img)
                     navRect.shrink(navRect.rect.center)
+
+
+                # sparare i colpi
+                if draw_proj == True and projectilRect.collide_recta.y < 0:
+                    projectilRect = Projectil(self.screen, projectil_frames, (navRect.rect.center[0], navRect.rect.center[1]-50))
+                if draw_proj == True:
+                    projectilRect.draw(which_frame_proj)
+                    projectilRect.move()
+
 
             navRect.draw()
             rock.draw(which_frame_rock)
@@ -207,10 +235,21 @@ class run:
                 self.screen.blit(text, (self.window[0]/2-150, self.window[1]/2-50))
             if navRect.velocity == 30:
                 pShrink += self.fps
+
+            if projectilRect.out() == True:
+                draw_proj = False
+
             if which_frame_rock == 79:
                 which_frame_rock = 0
             else:
                 which_frame_rock += 1
+
+            if which_frame_proj == 3:
+                which_frame_proj = 0
+            else:
+                which_frame_proj += 1
+
+
             pRsPawn += self.fps
             pPunt += self.fps
             pRsFrame += self.fps
