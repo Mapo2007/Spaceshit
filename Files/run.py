@@ -152,10 +152,10 @@ class run:
                 if draw_proj == True and projectilRect.collide_recta.y < 0:
                     projectilRect = Projectil(self.screen, projectil_frames, (navRect.rect.center[0], navRect.rect.center[1]-50))
                 if draw_proj == True:
-                    projectilRect.draw(which_frame_proj)
                     projectilRect.move()
 
-
+            if draw_proj == True:
+                projectilRect.draw(which_frame_proj)
             navRect.draw()
             rock.draw(which_frame_rock)
             
