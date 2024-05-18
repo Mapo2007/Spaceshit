@@ -8,7 +8,7 @@ class Image:
         self.image = image
         self.rect = self.image.get_rect()
         self.rect.center = self.pos
-        self.collide_recta = pygame.Rect((0,0),(80,90))
+        self.collide_recta = pygame.Rect((0,0),(80,80))
         self.collide_recta.center = self.pos
         self.velocity = 15
 

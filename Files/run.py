@@ -22,6 +22,7 @@ class run:
         pPunt = 0
         pRsPawn = 5500
         punti = 0
+        pRsFrame = 0
         pShrink = 0
         which_frame_rock = 0
         rock_frequency = 10000
@@ -45,9 +46,9 @@ class run:
         shrink_img = pygame.image.load("Images/shrink.png")
         shrink_img = pygame.transform.scale(shrink_img, (50,50))
         asteroide_frames = []
-        for i in range(4):
-            asteroide_frames.append(pygame.image.load(f"Images/Asteroid_Frames/frame{str(i)}.png"))
-            asteroide_frames[i] = pygame.transform.rotate(asteroide_frames[i], 45)
+        for i in range(80):
+            asteroide_frames.append(pygame.image.load(f"Images/Fireball_Frames/frame_{str(i)}_delay-0.02s.png"))
+            asteroide_frames[i] = pygame.transform.rotate(asteroide_frames[i], 90)
         
             
 
@@ -189,7 +190,7 @@ class run:
             for i in range(len(rock.lista)):
                 if rock.lista[i].collide_recta.colliderect(navRect.collide_recta):
                     # animazione esplosione
-                    pos = (((rock.lista[i].collide_recta.x + 150) + navRect.collide_recta.x)/2  ,  ((rock.lista[i].collide_recta.y + 200) + navRect.collide_recta.y)/2)
+                    pos = (((rock.lista[i].collide_recta.x + 100) + navRect.collide_recta.x)/2  ,  ((rock.lista[i].collide_recta.y + 200) + navRect.collide_recta.y)/2)
                     exp_an = Animation(self.screen, exp_frames, pos)
                     start_animation = True
             if start_animation == True:
@@ -206,12 +207,13 @@ class run:
                 self.screen.blit(text, (self.window[0]/2-150, self.window[1]/2-50))
             if navRect.velocity == 30:
                 pShrink += self.fps
-            if which_frame_rock == 3:
+            if which_frame_rock == 79:
                 which_frame_rock = 0
             else:
                 which_frame_rock += 1
             pRsPawn += self.fps
             pPunt += self.fps
+            pRsFrame += self.fps
             pygame.display.flip()
             if update_velocity == True:
                 pygame.time.wait(1100)

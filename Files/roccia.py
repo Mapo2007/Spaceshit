@@ -9,11 +9,11 @@ class Roccia:
         self.tot = tot
         self.pos = (randint(100,1820), -100)
         self.rect = []
-        self.collide_recta = pygame.rect.Rect((0,0), (80,280))
-        for i in range(4):
-            self.frames[i] = pygame.transform.scale(self.frames[i], (300,300))
+        self.collide_recta = pygame.rect.Rect((0,0), (80,200))
+        for i in range(80):
+            self.frames[i] = pygame.transform.scale(self.frames[i], (400,400))
             self.rect.append(self.frames[i].get_rect())
-        for i in range(4):
+        for i in range(80):
             self.rect[i].center = self.pos
         self.collide_recta.center = self.pos
 
@@ -31,7 +31,7 @@ class Roccia:
 
     def move(self):
         for i in range(len(self.lista)):
-            for j in range(4):
+            for j in range(80):
                 self.lista[i].rect[j].y += self.velocity
             self.lista[i].collide_recta.y += self.velocity
 
