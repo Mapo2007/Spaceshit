@@ -77,7 +77,7 @@ class run:
         spaceRect.new()
         pos = (randint(100,self.window[0]-100), -100)
         shrinkRect = Ship(self.screen, pos, (100,100), shrink_img)
-        projectilRect = Projectil(self.screen, projectil_frames, navRect.rect.center)
+        projectilRect = Projectil(self.screen, projectil_frames, (-1,-1))
 
         while True:
             for event in pygame.event.get():
