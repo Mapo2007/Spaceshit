@@ -2,7 +2,7 @@ import pygame, sys
 from random import randint
 from pygame.locals import *
 from rettangolo import *
-from image import *
+from ship import *
 from button import *
 from run import *    
 

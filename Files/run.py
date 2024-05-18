@@ -1,7 +1,7 @@
 import pygame, sys
 from pygame.locals import *
 from button import *
-from image import *
+from ship import *
 from random import randint
 from roccia import *
 from space import *
@@ -58,12 +58,12 @@ class run:
         exit_btn = Button(self.screen, (self.window[0]/2, self.window[1]/2+80), exit_img)
 
         # Creazione oggetti
-        navRect = Image(self.screen, (self.window[0]/2, self.window[1]-200), (100,100), ship_img)
+        navRect = Ship(self.screen, (self.window[0]/2, self.window[1]-200), (100,100), ship_img)
         rock = Roccia(self.screen, asteroide_frames, tot = 10)
         spaceRect = Space(self.screen, (self.window[0], self.window[1]), space_img)
         spaceRect.new()
         pos = (randint(100,self.window[0]-100), -100)
-        shrinkRect = Image(self.screen, pos, (100,100), shrink_img)
+        shrinkRect = Ship(self.screen, pos, (100,100), shrink_img)
 
         while True:
             for event in pygame.event.get():
@@ -118,14 +118,14 @@ class run:
                     if (shrinkRect.rect.y / 1080) > 1:
                         drawShrink = False
                         pos = (randint(100,self.window[0]-100), -100)
-                        shrinkRect = Image(self.screen, pos, (100,100), shrink_img)
+                        shrinkRect = Ship(self.screen, pos, (100,100), shrink_img)
                     shrinkRect.draw()
 
                 # collisione shrink
                 if shrinkRect.rect.colliderect(navRect.collide_recta):
                     drawShrink = False
                     pos = (randint(100,self.window[0]-100), -100)
-                    shrinkRect = Image(self.screen, pos, (100,100), shrink_img)
+                    shrinkRect = Ship(self.screen, pos, (100,100), shrink_img)
                     navRect.shrink(navRect.rect.center)
 
             navRect.draw()

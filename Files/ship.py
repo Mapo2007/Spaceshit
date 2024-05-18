@@ -1,7 +1,7 @@
 import pygame
 from pygame.locals import *
 
-class Image:
+class Ship:
     def __init__(self, screen, pos, size, image):
         self.screen = screen
         self.pos = pos
