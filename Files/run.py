@@ -93,8 +93,7 @@ class run:
 
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                     draw_proj = True
-                    projectile_sound.play()
-                    projectile_sound.set_volume(0.5) 
+
 
                 if event.type == QUIT:
                     Play_sound.stop()
@@ -156,9 +155,9 @@ class run:
 
                 # collisione shrink
                 if shrinkRect.rect.colliderect(navRect.collide_recta):
+                    drawShrink = False
                     PowerUp_sound.play()
                     PowerUp_sound.set_volume(0.4)
-                    drawShrink = False
                     pos = (randint(100,self.window[0]-100), -100)
                     shrinkRect = Ship(self.screen, pos, (100,100), shrink_img)
                     navRect.shrink(navRect.rect.center)
@@ -168,7 +167,10 @@ class run:
                 if draw_proj == True and projectilRect.collide_recta.y < 0:
                     projectilRect = Projectil(self.screen, projectil_frames, (navRect.rect.center[0], navRect.rect.center[1]-50))
                 if draw_proj == True:
+                    projectile_sound.play()
+                    projectile_sound.set_volume(0.5) 
                     projectilRect.move()
+                    
 
             if draw_proj == True:
                 projectilRect.draw(which_frame_proj)
@@ -216,7 +218,7 @@ class run:
                 text = font.render(f"Continua", 1, self.colori[1])
                 self.screen.blit(text, (self.window[0]/2-68, self.window[1]/2-100))
 
-                text = font.render(f"Menù", 1, self.colori[1])
+                text = font.render(f"Esci", 1, self.colori[1])
                 self.screen.blit(text, (self.window[0]/2-35, self.window[1]/2+60))
 
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
