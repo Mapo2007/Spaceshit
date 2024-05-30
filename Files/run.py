@@ -36,6 +36,7 @@ class run:
         
         # SUONI
         Play_sound = pygame.mixer.Sound("Sounds/Play.mp3")
+        audio_play = True #uso questa variabile per riprodurre la canzone una volta sola
         explosion_sound = pygame.mixer.Sound("Sounds/explosion.mp3")
         PowerUp_sound = pygame.mixer.Sound("Sounds/PowerUp.mp3")
         projectile_sound = pygame.mixer.Sound("Sounds/projectile.mp3")
@@ -84,6 +85,7 @@ class run:
         shrinkRect = Ship(self.screen, pos, (100,100), shrink_img)
         projectilRect = Projectil(self.screen, projectil_frames, (-1,-1))
 
+
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
@@ -95,6 +97,7 @@ class run:
                     projectile_sound.set_volume(0.5) 
 
                 if event.type == QUIT:
+                    Play_sound.stop()
                     fScore = open("Files/BestScore.txt", "w", encoding= "Utf-8")
                     fScore.writelines(str(punti))
                     fScore.close
@@ -102,10 +105,12 @@ class run:
                     sys.exit()
             
             spaceRect.draw()
-
             if game_pause == False:
-                Play_sound.play()
-                Play_sound.set_volume(0.1)     
+                #riproduci canzone una volta
+                if audio_play == True:
+                    Play_sound.play()
+                    Play_sound.set_volume(0.1)  
+                audio_play = False   
                 # prendo l'elenco dei tasti premuti
                 keys = pygame.key.get_pressed()
                 # movimenti della navicella (a/d)
@@ -137,7 +142,6 @@ class run:
                 if pPunt >= 1500:
                     punti += 1
                     pPunt = 0
-                
 
                 # powerup: shrink
                 if punti%30 == 0 and punti > 0:
@@ -230,6 +234,9 @@ class run:
             for i in range(len(rock.lista)):
                 if rock.lista[i].collide_recta.colliderect(navRect.collide_recta):
                     # animazione esplosione
+                    Play_sound.stop()
+                    explosion_sound.play()
+                    explosion_sound.set_volume(0.5)
                     pos = (((rock.lista[i].collide_recta.x + 100) + navRect.collide_recta.x)/2  ,  ((rock.lista[i].collide_recta.y + 200) + navRect.collide_recta.y)/2)
                     exp_an = Animation(self.screen, exp_frames, pos)
                     start_animation = True
