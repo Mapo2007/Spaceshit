@@ -34,6 +34,13 @@ class run:
         update_velocity = False
         draw_proj = False
         
+        # SUONI
+        Play_sound = pygame.mixer.Sound("Sounds/Play.mp3")
+        explosion_sound = pygame.mixer.Sound("Sounds/explosion.mp3")
+        PowerUp_sound = pygame.mixer.Sound("Sounds/PowerUp.mp3")
+        projectile_sound = pygame.mixer.Sound("Sounds/projectile.mp3")
+        rock_sound = pygame.mixer.Sound("Sounds/rock.mp3")
+
         # Caricamentp immagini:
         resume_img = pygame.image.load("Images/layer3.png")
         resume_img = pygame.transform.scale(resume_img, (200,71))
@@ -64,8 +71,6 @@ class run:
             projectil_frames[i] = pygame.transform.rotate(projectil_frames[i], (-135))
         
             
-
-        
         # Creazione dei bottoni:
         resume_btn = Button(self.screen, (self.window[0]/2, self.window[1]/2-60), resume_img)
         exit_btn = Button(self.screen, (self.window[0]/2, self.window[1]/2+80), exit_img)
@@ -86,7 +91,8 @@ class run:
 
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                     draw_proj = True
-                    
+                    projectile_sound.play()
+                    projectile_sound.set_volume(0.5) 
 
                 if event.type == QUIT:
                     fScore = open("Files/BestScore.txt", "w", encoding= "Utf-8")
@@ -97,7 +103,9 @@ class run:
             
             spaceRect.draw()
 
-            if game_pause == False:    
+            if game_pause == False:
+                Play_sound.play()
+                Play_sound.set_volume(0.1)     
                 # prendo l'elenco dei tasti premuti
                 keys = pygame.key.get_pressed()
                 # movimenti della navicella (a/d)
@@ -114,6 +122,8 @@ class run:
                 # aggiunta rocce
                 if pRsPawn >= randint(1000, rock_frequency):
                     rock.newRock()
+                    rock_sound.play()
+                    rock_sound.set_volume(0.1)
                     pRsPawn = 0
 
                 # velocità delle rocce a score = 25
@@ -142,6 +152,8 @@ class run:
 
                 # collisione shrink
                 if shrinkRect.rect.colliderect(navRect.collide_recta):
+                    PowerUp_sound.play()
+                    PowerUp_sound.set_volume(0.4)
                     drawShrink = False
                     pos = (randint(100,self.window[0]-100), -100)
                     shrinkRect = Ship(self.screen, pos, (100,100), shrink_img)
