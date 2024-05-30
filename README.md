@@ -2,6 +2,7 @@
 In questo gioco BELLISSIMO dovrai schivare gli asteroidi con la tua NAVICELLA SPAZIALE!!
 
 Comandi:
+per avviare il gioco bisognerà avviare il file main.py
 A = muoviti a sinistra  
 D = muoviti a destra    
 ESC = menù di pausa
