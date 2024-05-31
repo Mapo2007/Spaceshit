@@ -80,9 +80,11 @@ class run:
         for i in range(15):
             if i <= 9:
                 ufo_frames.append(pygame.image.load(f"Images/Ufo_Frames/frame_0{str(i)}_delay-0.1s.png"))
+                ufo_frames[i] = pygame.transform.scale(ufo_frames[i], (500, 500))
                 #ufo_frames[i] = pygame.transform.rotate(ufo_frames[i], (-135))
             if i >= 10:
                 ufo_frames.append(pygame.image.load(f"Images/Ufo_Frames/frame_{str(i)}_delay-0.1s.png"))
+                ufo_frames[i] = pygame.transform.scale(ufo_frames[i], (500, 500))
                 #ufo_frames[i] = pygame.transform.rotate(ufo_frames[i], (-135))
             
         # Creazione dei bottoni:

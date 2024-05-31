@@ -3,7 +3,7 @@ from pygame.locals import *
 from random import randint
 
 class Ufo:
-    def __init__(self,screen, frames, tot = 20):
+    def __init__(self, screen, frames, tot = 3):
         self.screen = screen
         self.frames = frames
         self.tot = tot
