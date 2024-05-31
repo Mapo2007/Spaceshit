@@ -9,8 +9,8 @@ from run import *
 pygame.init()
 
 # Window Settings
-window_widht = 1360
-window_height = 768
+window_widht = 1920
+window_height = 1080
 window_size = (window_widht, window_height)
 screen = pygame.display.set_mode(window_size)
 pygame.display.set_caption("Spaceshit")
