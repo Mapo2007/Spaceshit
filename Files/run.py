@@ -4,6 +4,7 @@ from button import *
 from ship import *
 from random import randint
 from roccia import *
+from ufo import *
 from space import *
 from Animations import *
 from projectile import *
@@ -21,12 +22,16 @@ class run:
         # Variabili di gioco
         game_pause = False
         pPunt = 0
-        pRsPawn = 5500
+        pRsPawn = 5500 # frequenza spawn asteroidi
+        pUsPawn = 0 # frequenza spawn ufo
         punti = 0
         pRsFrame = 0
+        pUsFrame = 0
         pShrink = 0
         which_frame_rock = 0
+        which_frame_ufo = 0
         which_frame_proj = 0
+        ufo_frequency = 6500
         rock_frequency = 10000
         font = pygame.font.Font("Fonts/Upheavtt.ttf", 30)
         start_animation = False
@@ -71,6 +76,14 @@ class run:
             projectil_frames.append(pygame.image.load(f"Images/Projectile_Frames/frame{str(i)}.png"))
             projectil_frames[i] = pygame.transform.rotate(projectil_frames[i], (-135))
         
+        ufo_frames = []
+        for i in range(15):
+            if i <= 9:
+                ufo_frames.append(pygame.image.load(f"Images/Ufo_Frames/frame_0{str(i)}_delay-0.1s.png"))
+                #ufo_frames[i] = pygame.transform.rotate(ufo_frames[i], (-135))
+            if i >= 10:
+                ufo_frames.append(pygame.image.load(f"Images/Ufo_Frames/frame_{str(i)}_delay-0.1s.png"))
+                #ufo_frames[i] = pygame.transform.rotate(ufo_frames[i], (-135))
             
         # Creazione dei bottoni:
         resume_btn = Button(self.screen, (self.window[0]/2, self.window[1]/2-60), resume_img)
@@ -79,6 +92,7 @@ class run:
         # Creazione oggetti
         navRect = Ship(self.screen, (self.window[0]/2, self.window[1]-200), (100,100), ship_img)
         rock = Roccia(self.screen, asteroide_frames, tot = 10)
+        ufo = Ufo(self.screen, ufo_frames, tot = 1)
         spaceRect = Space(self.screen, (self.window[0], self.window[1]), space_img)
         spaceRect.new()
         pos = (randint(100,self.window[0]-100), -100)
@@ -120,6 +134,8 @@ class run:
                 
                 # movimento roccia
                 rock.move()
+                # movimento ufo
+                ufo.move()
                 # movimento spazio
                 spaceRect.move()
 
@@ -129,7 +145,12 @@ class run:
                     rock_sound.play()
                     rock_sound.set_volume(0.1)
                     pRsPawn = 0
-
+                    
+                # aggiunta ufo
+                if pUsPawn >= randint(000, ufo_frequency):
+                    ufo.newUfo()
+                    pUsPawn = 0
+                    
                 # velocità delle rocce a score = 25
                 if punti == 25 and pPunt >= 1500:
                     rock.velocity += 10
@@ -176,6 +197,7 @@ class run:
                 projectilRect.draw(which_frame_proj)
             navRect.draw()
             rock.draw(which_frame_rock)
+            ufo.draw(which_frame_ufo)
             
             # punti
             if punti <= best:
@@ -246,6 +268,20 @@ class run:
                 exp_an.play()
                 return punti
             
+            # collisione ufo astronave
+            for i in range(len(ufo.lista)):
+                if ufo.lista[i].collide_recta.colliderect(navRect.collide_recta):
+                    # animazione esplosione
+                    Play_sound.stop()
+                    explosion_sound.play()
+                    explosion_sound.set_volume(0.5)
+                    pos = (((ufo.lista[i].collide_recta.x + 100) + navRect.collide_recta.x)/2  ,  ((ufo.lista[i].collide_recta.y + 200) + navRect.collide_recta.y)/2)
+                    exp_an = Animation(self.screen, exp_frames, pos)
+                    start_animation = True
+            if start_animation == True:
+                exp_an.play()
+                return punti
+            
             if pShrink >= 10000:
                 navRect.unShrink(navRect.rect.center)
                 pShrink = 0
@@ -259,21 +295,28 @@ class run:
 
             if projectilRect.out() == True:
                 draw_proj = False
-
+            # rocce
             if which_frame_rock == 79:
                 which_frame_rock = 0
             else:
                 which_frame_rock += 1
-
+            # proiettile
             if which_frame_proj == 3:
                 which_frame_proj = 0
             else:
                 which_frame_proj += 1
+            # ufo    
+            if which_frame_ufo == 14:
+                which_frame_ufo = 0
+            else:
+                which_frame_ufo += 1
 
 
             pRsPawn += self.fps
+            pUsPawn += self.fps
             pPunt += self.fps
             pRsFrame += self.fps
+            pUsFrame += self.fps
             pygame.display.flip()
             if update_velocity == True:
                 pygame.time.wait(1100)
