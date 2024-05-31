@@ -11,7 +11,7 @@ class Ufo:
         self.rect = []
         self.collide_recta = pygame.rect.Rect((0,0), (80,200))
         for i in range(15):
-            self.frames[i] = pygame.transform.scale(self.frames[i], (400,400))
+            self.frames[i] = pygame.transform.scale(self.frames[i], (270, 270))
             self.rect.append(self.frames[i].get_rect())
         for i in range(15):
             self.rect[i].center = self.pos
