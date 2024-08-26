@@ -249,6 +249,7 @@ class run:
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     pos = pygame.mouse.get_pos()
                     if exit_btn.rect.collidepoint(pos):
+                        Play_sound.stop()
                         return punti
             
             
